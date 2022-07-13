@@ -1,0 +1,16 @@
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\Cross_Inform.exe
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\Cross_Inform.deps.json
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\Cross_Inform.runtimeconfig.json
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\Cross_Inform.runtimeconfig.dev.json
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\Cross_Inform.dll
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\ref\Cross_Inform.dll
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\bin\Debug\net5.0\Cross_Inform.pdb
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.csproj.AssemblyReference.cache
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.GeneratedMSBuildEditorConfig.editorconfig
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.AssemblyInfoInputs.cache
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.AssemblyInfo.cs
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.csproj.CoreCompileInputs.cache
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.dll
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\ref\Cross_Inform.dll
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.pdb
+C:\!Disk\VisualStudio\Cross_Inform\Cross_Inform\obj\Debug\net5.0\Cross_Inform.genruntimeconfig.cache
