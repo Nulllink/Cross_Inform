@@ -4,83 +4,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Cross_Inform
 {
     class Program
     {
-        static string[] lines1;
+        static string[] all_lines;
+        const int th = 2;
+        //static Dictionary<string, int>[] triplets = new Dictionary<string, int>[th];
         static void Main(string[] args)
         {
-            int th = 4;
-            Dictionary<string, int> triplets1 = new Dictionary<string, int>();
-            Dictionary<string, int> triplets2 = new Dictionary<string, int>();
-            Dictionary<string, int> triplets3 = new Dictionary<string, int>();
-            Dictionary<string, int> triplets4 = new Dictionary<string, int>();
-            //List<Dictionary<string, int>> triplets = new List<Dictionary<string, int>>();
-            Dictionary<string, int>[] triplets = new Dictionary<string, int>[th];
             Console.Write("Inter path to file: ");
             string path = Console.ReadLine();
             path = "C:/Users/sasho/Downloads/bible.txt";
             DateTime start_time = DateTime.Now;
-            lines1 = File.ReadAllLines(path);
-            
-            int mid = lines1.Length / th;
-            Console.WriteLine("t1 " + (DateTime.Now - start_time).ToString());
-            //List<Task> tasks = new List<Task>();
+            all_lines = File.ReadAllLines(path);
+            int mid = all_lines.Length / th;
+            Dictionary<string, int> triplets1 = new Dictionary<string, int>();
+            Dictionary<string, int> triplets2 = new Dictionary<string, int>();
+            Task[] tasks = new Task[th];
+            tasks[0] = Task.Factory.StartNew(() => Line_process(triplets1, 0, mid));
+            tasks[1] = Task.Factory.StartNew(() => Line_process(triplets2, mid, all_lines.Length));
             //for (int i = 0; i < th; i++)
             //{
-            //    //tasks.Add(Task t1 = Task.Factory.StartNew(() => Line_process(triplets1, 0, mid)));
+            //    triplets[i] = new Dictionary<string, int>();
             //}
-            Task t1 = Task.Factory.StartNew(() => Line_process(triplets1, 0, mid));
-            Task t2 = Task.Factory.StartNew(() => Line_process(triplets2, mid, 2*mid));
-            Task t3 = Task.Factory.StartNew(() => Line_process(triplets3, 2*mid, 3*mid));
-            Task t4 = Task.Factory.StartNew(() => Line_process(triplets4, 3 * mid, lines1.Length));
-            Console.WriteLine("t4 " + (DateTime.Now - start_time).ToString());
-            //for (int i = 0; i < th; i++)
+            //for (int j = 0; j < th-1; j++)
             //{
-            //    tasks[i].Wait();
-            //    triplets[i] = tasks[i].Result;
+            //    tasks[j] = Task.Factory.StartNew(() => Line_process(j, j*mid, (j+1)*mid));
+            //    Thread.Sleep(10);
             //}
-            t1.Wait();
-            t2.Wait();
-            t3.Wait();
-            t4.Wait();
-            Console.WriteLine("t2 " + (DateTime.Now - start_time).ToString());
-            //for (int i = 1; i < th; i++)
-            //{
-            //    Merging_dictionaries(triplets[0], triplets[i]);
-            //}
-            Merging_dictionaries(triplets1, triplets2);
-            Merging_dictionaries(triplets1, triplets3);
-            Merging_dictionaries(triplets1, triplets4);
-            Console.WriteLine("t3 " + (DateTime.Now - start_time).ToString());
+            //tasks[th-1] = Task.Factory.StartNew(() => Line_process(th-1,  (th-1)* mid, all_lines.Length));
+            Task.WaitAll(tasks);
+            for (int i = 1; i < th; i++)
+            {
+                Merging_dictionaries(triplets1, triplets2);
+            }
             var sortedDict = (from entry in triplets1 orderby entry.Value descending  select entry).Take(10);
             foreach(var pair in sortedDict)
             {
-                Console.WriteLine(pair.Key+", "+pair.Value);
+                Console.Write(pair.Key+",");
             }
+            Console.WriteLine();
             TimeSpan end_time = DateTime.Now - start_time;
             Console.WriteLine($"Run time: {end_time.TotalMilliseconds} ms");
         }
-        static void Line_process(Dictionary<string, int> triplet, int start, int end)
+        static void Line_process(Dictionary<string, int> triplets, int start, int end)
         {
             for (; start < end; start++)
             {
-                string line = lines1[start];
-                string[] words = line.Split();
+                string line = all_lines[start];
+                string[] words = Regex.Split(line,@"\W+");
                 foreach (string word in words)
                 {
                     for (int i = 0; i < word.Length - 2; i++)
                     {
                         string trip = word.Substring(i, 3).ToLower();
-                        if (triplet.ContainsKey(trip))
+                        if (triplets.ContainsKey(trip))
                         {
-                            triplet[trip]++;
+                            triplets[trip]++;
                         }
                         else
                         {
-                            triplet.Add(trip, 1);
+                            triplets.Add(trip, 1);
                         }
                     }
                 }
@@ -101,6 +88,7 @@ namespace Cross_Inform
                 }
             }
         }
+        
     }
 }
-//1t - 798ms 1t - 725ms 2t - 592ms 2t - 843ms 2t - 984ms 2t - 613ms 4t = 676ms 3t = 570ms 4t = 472ms
+//1t - 798ms 1t - 725ms 2t - 592ms 2t - 843ms 2t - 984ms 2t - 613ms 4t = 676ms 3t = 570ms 4t = 472ms 2t = 633ms 4t = 548ms
